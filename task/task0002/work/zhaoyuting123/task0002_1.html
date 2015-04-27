@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>task0002</title>
+</head>
+
+<body>
+    <span>请输入您的爱好，用逗号分隔</span><input id="myHobby" type="text">
+    <button id="toArray">显示结果</button>
+    <br/>
+    <span id="hobbyArray"></span>
+
+
+    <script type="text/javascript" src="util.js"></script>
+    <script type="text/javascript">
+        addEvent($("#toArray"),"click",function(){
+            var arr = $("#toArray").text().split(",");
+            arr = uniqArray(arr);
+            var str = "";
+            for(var i in arr){
+                str+=arr[i];
+            }
+            $("#hobbyArray").text(str);
+        })
+    </script>
+    <script type="text/javascript" src="js/task0002_1.js"></script>
+</body>
+</html>
