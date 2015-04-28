@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>task0002</title>
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 
 <body>
+<!--界面首先有一个文本输入框，允许按照特定的格式YYYY-MM-DD输入年月日；
+输入框旁有一个按钮，点击按钮后，计算当前距离输入的日期的00:00:00有多少时间差
+在页面中显示，距离YYYY年MM月DD日还有XX天XX小时XX分XX秒
+每一秒钟更新倒计时上显示的数
+如果时差为0，则倒计时停止-->
 
+<span>请按照YYYY-MM-DD的格式输入以下年月日：</span>
+<input type="text" id="myTime" placeholder="YYYY-MM-DD"/>
+<button id="calculate">计算now距离输入日期的时间差</button>
+<span id="clock"></span>
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/task0002_2.js"></script>
 </body>
 </html>

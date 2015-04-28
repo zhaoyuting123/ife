@@ -158,7 +158,7 @@ function uniqArray(arr) {
     var arrTar = [];
     arrTar[0] = arr[0];
     for (var i = 1, length = arr.length; i < length; i++) {
-        if (arrTar.indexOf(arr[i]) == -1) {
+        if (arrTar.indexOf(arr[i]) == -1&&arr[i]!=null&&arr[i]!=undefined&&arr[i]!="") {
             arrTar.push(arr[i]);
         }
     }
@@ -563,14 +563,8 @@ function $(selector) {
     for (var i = 0; i < selectorArr.length; i++) {
         if (selectorArr[i].length == 1) {
             var node = findNode(selectorArr[i][0]);
-            if(node.length==1&&selectorArr[i].indexOf("#")!=-1){
-                //代表从id号里取,只可能有一个，返回元素而不是数组
-                return node;
-            }
-            else{
-                for (var key = 0; key < node.length; key++) {
-                    result.push(node[key])
-                }
+            for (var key = 0; key < node.length; key++) {
+                result.push(node[key])
             }
         } else { //".text em"
             /*第一种思想：找到.text所有子元素，然后在子元素中找em*/
@@ -615,6 +609,11 @@ function $(selector) {
         }
     }
     result = uniqArray(result);
+    //需要对id的进行一个处理
+    if(result.length == 1 &&selectorArr.length == 1&&selectorArr[0].length == 1&& selectorArr[0].toString().indexOf("#")==0){
+        //代表取id
+        return result[0];
+    }
     return result;
 }
 
@@ -700,6 +699,7 @@ function trimStringBody(s) {
 }
 
 
+/*
 // 可以通过id获取DOM对象，通过#标示，例如
  $("#adom"); // 返回id为adom的DOM对象
 
@@ -716,6 +716,7 @@ function trimStringBody(s) {
 
  // 可以通过简单的组合提高查询便利性，例如
  $("#adom .classa"); // 返回id为adom的DOM所包含的所有子节点中，第一个样式定义包含classa的对象
+*/
 
 
 
@@ -740,11 +741,13 @@ function addEvent(element, event, listener) {
 
 }
 
+/*
 // 例如：
 function clicklistener(event) {
 
 }
 addEvent($("#doma"), "click", a);
+*/
 
 // 移除element对象对于event事件发生时执行listener的响应
 function removeEvent(element, event, listener) {
@@ -778,10 +781,10 @@ function addEnterEvent(element, listener) {
     addEvent(element,'enter',listener);
 }
 
-$.on = addEvent(element, event, listener);
-$.un = removeEvent(element, event, listener);
-$.click = addClickEvent(element, listener);
-$.enter = addEnterEvent(element, listener);
+$.on = addEvent;
+$.un = removeEvent;
+$.click = addClickEvent;
+$.enter = addEnterEvent;
 
 /*代理部分未做，后续添加，木有时间鸟。。。对不住，亲爱的导师~~辛苦导师*/
 

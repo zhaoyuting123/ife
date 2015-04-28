@@ -3,27 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>task0002</title>
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 
 <body>
-    <span>请输入您的爱好，用逗号分隔</span><input id="myHobby" type="text">
+    <p>第一阶段:单行输入</p>
+    <span>请输入您的爱好，用逗号分隔</span><br/>
+    <input id="myHobby" type="text"/><br/>
     <button id="toArray">显示结果</button>
     <br/>
-    <span id="hobbyArray"></span>
+    <p id="hobbyArray"></p>
+    <hr/>
+    <p>第二阶段:多行输入</p>
+    <span>请输入您的爱好，用(换行、空格（全角/半角）、逗号（全角/半角）、顿号、分号)分隔</span><br/>
+    <textarea cols="80" rows="10" id="myHobby2"></textarea><br/>
+    <button id="toArray2">显示结果</button>
+    <p id="hobbyArray2"></p>
+    <hr/>
+    <p>第三阶段:多行输入，检测数量不能超过十个</p>
+    <span>请输入您的爱好，用(换行、空格（全角/半角）、逗号（全角/半角）、顿号、分号)分隔，而且数量不能超过十个哦</span><br/>
+    <textarea cols="80" rows="10" id="myHobby3"></textarea>
+    <br/>
+
+    <button id="toArray3">显示结果</button>
+    <span id="warn" class="warn"></span>
+    <p id="hobbyArray3"></p>
 
 
-    <script type="text/javascript" src="util.js"></script>
-    <script type="text/javascript">
-        addEvent($("#toArray"),"click",function(){
-            var arr = $("#toArray").text().split(",");
-            arr = uniqArray(arr);
-            var str = "";
-            for(var i in arr){
-                str+=arr[i];
-            }
-            $("#hobbyArray").text(str);
-        })
-    </script>
+    <script type="text/javascript" src="js/util.js"></script>
     <script type="text/javascript" src="js/task0002_1.js"></script>
 </body>
 </html>
