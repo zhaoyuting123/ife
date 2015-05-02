@@ -346,14 +346,19 @@ function isMobilePhone(phone) {
  * @param {Stirng} newClassName
  */
 function addClass(element, newClassName) {
-    if(element.nodeType&&typeof oldClassName == "string"){
+    if(element.nodeType&&typeof newClassName == "string"){
         var oldClass = element.getAttribute("class");
-        var oldClassArr = oldClass.split(" ");
-        //如果没有，则添加。否则不做任何事情
-        if(oldClassArr.indexOf(newClassName)==-1){
-            var newClass = oldClass +" "+ newClassName;
-            element.setAttribute("class",newClass);
+        if(oldClass){
+            var oldClassArr = oldClass.split(" ");
+            if(oldClassArr.indexOf(newClassName)==-1){
+                var newClass = oldClass +" "+ newClassName;
+                element.setAttribute("class",newClass);
+            }
+        }else{
+            element.setAttribute("class",newClassName);
         }
+
+
     }
 }
 
@@ -366,14 +371,17 @@ function addClass(element, newClassName) {
 function removeClass(element, oldClassName) {
     if(element.nodeType&&typeof oldClassName == "string"){
         var oldClass = element.getAttribute("class");
-        //将class根据空格分隔，形成数组
-        var oldClassArr = oldClass.split(" ");
-        if(oldClassArr.indexOf(oldClassName)!=-1){
-            oldClassArr.splice(oldClassArr.indexOf(oldClassName),1);
+        if(oldClass){
+            //将class根据空格分隔，形成数组
+            var oldClassArr = oldClass.split(" ");
+            if(oldClassArr.indexOf(oldClassName)!=-1){
+                oldClassArr.splice(oldClassArr.indexOf(oldClassName),1);
+            }
+            //去掉需要移除的class后将其组合成字符串，以空格为间隔
+            var newClass = oldClassArr.join(" ");
+            element.setAttribute("class", newClass);
         }
-        //去掉需要移除的class后将其组合成字符串，以空格为间隔
-        var newClass = oldClassArr.join(" ");
-        element.setAttribute("class", newClass);
+
     }
 }
 
@@ -772,7 +780,6 @@ function removeEvent(element, event, listener) {
 
 // 实现对click事件的绑定
 function addClickEvent(element, listener) {
-
     addEvent(element,'click',listener);
 }
 

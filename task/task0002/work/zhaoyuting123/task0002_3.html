@@ -3,9 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <title>task0002</title>
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 
 <body>
+<!--小练习3：轮播图
+任务描述
+在和上一任务同一目录下面创建一个task0002_3.html文件，在js目录中创建task0002_3.js，并在其中编码，实现一个轮播图的功能。
+
+图片数量及URL均在HTML中写好
+可以配置轮播的顺序（正序、逆序）、是否循环、间隔时长
+图片切换的动画要流畅
+在轮播图下方自动生成对应图片的小点，点击小点，轮播图自动动画切换到对应的图片
+效果示例：http://echarts.baidu.com/ 上面的轮播图（不需要做左右两个箭头）-->
+
+<div class="container">
+        <div class="carousel"  id="carousel1"><img src="img/banner1.png"/></div>
+        <div class="carousel"  id="carousel2"><img src="img/banner2.png"/></div>
+        <div class="carousel"  id="carousel3"><img src="img/banner3.png"/></div>
+        <div class="itemSelector">
+            <ol>
+                <li id="s1" class="itemSelected"></li>
+                <li id="s2" ></li>
+                <li id="s3"></li>
+            </ol>
+        </div>
+</div>
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/task0002_3.js"></script>
+<script type="text/javascript" >
+    /*第一种方式*/
+    //本质：对数组中的位置进行旋转,旋转后修改位置
+    var position = [ '0','100%','-100%'];
+    var positionOld = [];
+    var intervalId = 0;
+    var option ={
+        sequence:"right",
+        cycle:true,
+        timeInterval:1000
+    };
+    var seq = option.sequence;
+    var cycle = option.cycle;
+    var time = option.timeInterval;
+
+    //对位置数组移位一次
+    function rotateOnce(arr,seq){
+        positionOld = arr.slice();
+        var result = new Array(arr.length);
+        if(seq =="left"){
+            result = arr.slice(1);
+            result[arr.length-1] = arr[0];
+        }else if(seq == "right"){
+            //[1,2,3,4]-->[4,1,2,3]
+            var temp = [];
+            temp[0] = arr[arr.length-1];
+            result = temp.concat(arr.slice(0,-1));
+        }
+        return result;
+    }
+
+    //根据position的位置设定elements的位置
+    function setElementsPostion(elements,position){
+       for(var i=0;i<elements.length;i++){
+           var newPosition = parseInt(position[i]);
+           var oldPosition = parseInt(positionOld[i]);
+
+           if(Math.abs(newPosition-oldPosition)==200){
+               elements[i].style.transition =  "none";
+           }else{
+               elements[i].style.transition =  "all 0.5s ease-in-out";
+           }
+
+           elements[i].style.left =  position[i];
+           elements[i].style.position =  "absolute";
+           elements[i].style.dispaly = "block";
+
+           //设定当前图片对应的小点的样式
+           if(position[i] == "0"){
+               setDotStyle($("li")[i]);
+           }else{
+               removeClass($("li")[i],"itemSelected");
+           }
+       }
+    }
+
+    //设定小点的样式为选中状态
+    function setDotStyle(element){
+        addClass(element,"itemSelected");
+    }
+
+    //循环旋转轮播图
+    function intervalCarousel(){
+         intervalId = setInterval(function(){
+            position = rotateOnce(position,option.sequence);
+            setElementsPostion($(".carousel"),position)
+        },3000);
+    }
+
+    intervalCarousel();
+
+    //绑定事件：点击小点，移动position到合适的位置
+    function liClick(){
+        clearInterval(intervalId);
+        //获取小点的位置
+        var element = this;
+        var id = element.id;
+        id = id.slice(1);
+        positionOld = position.slice();
+
+        if(id=="1"){
+            position = ['0' ,'100%','-100%'];
+        }else if(id=="2"){
+            position = ['-100%' ,'0','100%'];
+        }else if(id == "3"){
+            position = ['100%','-100%' ,'0'];
+        }
+
+        setElementsPostion($(".carousel"),position);
+        intervalCarousel();
+
+    };
+
+    for(var j=0;j<3;j++){
+        addClickEvent($("li")[j],liClick);
+    }
+
+
+/*第二种方式,待调整*/
+   /* var i =0;
+    setInterval(function(){
+
+        *//* removeClass($(".carousel")[(i+1)%3],"active")
+         removeClass($(".carousel")[(i-1)%3],"active")*//*
+        var node1 = $(".carousel")[(i+1)%3];
+        if(node1.getAttribute("class").indexOf("active") != -1){
+            removeClass(node1,"active");
+        }
+        var node2 = $(".carousel")[(Math.abs(i+2))%3];
+        if(node2.getAttribute("class").indexOf("active") != -1){
+            removeClass(node2,"active");
+        }
+
+        addClass( $(".carousel")[i], "active");
+
+        i = (i+1)%3;
+    },3000);*/
+
+</script>
+
 
 </body>
 </html>

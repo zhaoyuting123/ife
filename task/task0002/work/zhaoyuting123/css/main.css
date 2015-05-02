@@ -1,0 +1,133 @@
+.warn{
+    color:red;
+    position:absolute;
+    font-size:14px;
+    margin: -20px 0px 0px -70px;
+
+}
+hr{
+    border:1px dashed deepskyblue;
+}
+#toArray3{
+    position:relative;
+}
+
+
+
+
+/*小练习3*/
+
+/*
+.container{
+    width:100%;
+    overflow:hidden;
+    margin:0 auto;
+    position:relative;
+}
+
+.carousel{
+    display:none;
+
+
+    width:100%;
+    transition:  5.6s  ease-in-out left;
+}
+
+.carousel img{
+    width:100%;
+    height:100%;
+}
+
+#carousel1{
+
+}
+
+#carousel2{
+
+}
+
+#carousel3{
+
+}
+.active{
+
+    left:0;
+    display: block;
+    transition:  5.6s  ease-in-out left;
+}
+*/
+
+/*图片下面的圆框选择*/
+.itemSelector{
+    position:absolute;
+    bottom:15px;
+    width: 100%;
+    z-index:20;
+}
+
+.itemSelector ol{
+    list-style-type: none;
+    margin:0 auto;
+    padding:0;
+}
+
+.itemSelector li{
+    width: 12px;
+    height:12px;
+    display:inline-block;
+    border-radius: 10px;
+    background-color:darkgrey;
+}
+
+.itemSelector .itemSelected{
+    background-color:hotpink;
+}
+
+/*
+小练习3第二种方式
+*/
+  .container{
+      width:100%;
+      height:400px;
+      overflow:hidden;
+      margin:0 auto;
+      position:relative;
+      text-align:center;
+  }
+
+.carousel{
+    position:absolute;
+    width:100%;
+    transition:  5.6s  ease-in-out left;
+}
+
+.carousel img{
+    width:100%;
+    height:100%;
+}
+
+#carousel1{
+    position:absolute;
+    left:0;
+
+}
+
+#carousel2{
+    position:absolute;
+    left:100%;
+
+}
+
+#carousel3{
+    position:absolute;
+    left:-100%;
+
+}
+/*
+.active{
+
+    left:0;
+    display: block;
+    transition:  5.6s  ease-in-out left;
+}
+*/
