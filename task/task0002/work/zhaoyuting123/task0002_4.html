@@ -3,9 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <title>task0002</title>
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 
 <body>
-    
+<!--在和上一任务同一目录下面创建一个task0002_4.html文件，在js目录中创建task0002_4.js，
+
+并在其中编码，实现一个类似百度搜索框的输入提示的功能。
+
+要求如下：
+
+允许使用鼠标点击选中提示栏中的某个选项
+允许使用键盘上下键来选中提示栏中的某个选项，回车确认选中
+选中后，提示内容变更到输入框中-->
+<div class="containerSearch">
+    <input type="text" id="myKey" placeholder="输入你想查找的东西" onkeyup="search()"/>
+    <div id = "searchResult" class="displayNone">
+        <ul>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/task0002_4.js"></script>
+<script type="text/javascript">
+    var activeNode = document.activeElement;
+    var activeIndex = 0;
+    function search(){
+        var keyWords = trim($("#myKey").value);
+
+        if(keyWords == ""){
+            //查找
+            alert("没有输入搜索条件，请输入内容");
+            return false;
+        }
+
+        //后退按钮 backspace =8 ,不做任何事情
+        if(event.keyCode == 8){
+            return false;
+        }
+
+        //回车按钮 14
+        if(event.keyCode == 13){
+            console.log("输入了回车，进行搜索");
+            var nodeSelected = $(".backGrey")[0];
+            $("#myKey").value = nodeSelected.innerText;
+            $("#myKey").focus();
+            return false;
+
+        }
+        if(event.keyCode==38||event.keyCode==40){
+            alert("按下了上或者下");
+            //移除所有的灰色背景
+            removeClass($(".backGrey"),"backGrey");
+            activeNode = $("ul li")[Math.abs(activeIndex)%4];
+            addClass(activeNode,"backGrey");
+            if(event.keyCode==38){
+                activeIndex--;
+            }else{
+                activeIndex++;
+            }
+            return false;
+        }
+
+
+        var resultDiv = $("ul")[0];
+
+        removeResult(resultDiv);
+
+        var data = ["aaaa","asdfa","asddddd","asddddd"];
+
+
+        addToDiv(resultDiv,data);
+        addClickEvent($("li"),clickItem);
+
+
+        removeClass($("#searchResult"),"displayNone");
+
+
+
+        /*ajax(
+                'http://localhost:8080/server/ajaxtest',
+                {
+                    data: {
+                        keyWords: keyWords
+                    },
+                    onsuccess: function (responseText, xhr) {
+                        console.log(responseText);
+                    }
+                }
+        );*/
+
+    }
+
+    function addToDiv(element,data){
+        // Creates a new empty DocumentFragment.
+        var fragment = document.createDocumentFragment();
+        for (var i = 0; i < data.length; i ++) {
+            var li = document.createElement('li');
+            li.tabIndex = "0";
+            li.innerHTML = data[i];
+            fragment.appendChild(li);
+        }
+        element.appendChild(fragment);
+
+    }
+
+    function removeResult(element){
+        var liNodes = $("li");
+        for(var i= 0,length = liNodes.length;i<length;i++){
+            element.removeChild(liNodes[i]);
+        }
+    }
+
+    function clickItem(){
+       var value = this.innerText;
+        removeClass($(".backGrey"),"backGrey");
+        $("#myKey").value = value;
+        $("#myKey").focus();
+
+    }
+
+    function arrowListener(event){
+
+        var activ = document.activeElement;
+        if(event.keyCode == 38){
+            alert("选中了上箭头");
+        }else if(event.keyCode == 40){
+            alert("选中了下箭头");
+        }
+
+    }
+
+
+    document.addEventListener(document.getElementsByTagName("body")[0],"keyDown",arrowListener);
+
+
+
+</script>
 </body>
 </html>

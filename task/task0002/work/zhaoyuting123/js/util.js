@@ -369,7 +369,13 @@ function addClass(element, newClassName) {
  * @param {Stirng} newClassName
  */
 function removeClass(element, oldClassName) {
-    if(element.nodeType&&typeof oldClassName == "string"){
+    if(element instanceof Array){
+        for(var i=0;i<element.length;i++){
+            removeClass(element[i],oldClassName);
+        }
+
+    }
+    else if(element.nodeType&&typeof oldClassName == "string"){
         var oldClass = element.getAttribute("class");
         if(oldClass){
             //将class根据空格分隔，形成数组
@@ -730,6 +736,7 @@ function trimStringBody(s) {
 
 // 给一个element绑定一个针对event事件的响应，响应函数为listener
 function addEvent(element, event, listener) {
+
     var addEvent1 = function(element, event, listener){
         if (element.addEventListener) {
             element.addEventListener(event, listener);
@@ -780,7 +787,14 @@ function removeEvent(element, event, listener) {
 
 // 实现对click事件的绑定
 function addClickEvent(element, listener) {
-    addEvent(element,'click',listener);
+    if(element.nodeType){//只有一个节点
+        addEvent(element,'click',listener);
+    }else{
+        for(var i=0;i<element.length;i++){
+            addEvent(element[i],'click',listener);
+        }
+    }
+
 }
 
 // 实现对于按Enter键时的事件绑定
@@ -846,8 +860,7 @@ function getXmlHttpObject(){
 
 
 function ajax(url, options) {
-    var myXmlHttpRequest="";
-    myXmlHttpRequest=getXmlHttpObject();
+    var myXmlHttpRequest=getXmlHttpObject();
     if(myXmlHttpRequest)
     {
         var data = options.data;
@@ -870,7 +883,7 @@ function ajax(url, options) {
             //指定回调函数
             myXmlHttpRequest.onreadystatechange = data.onsuccess;
             //真的发送请求，如果是get，则send null,如果是post，则填入实际的数据
-            myXmlHttpRequest.send(stringToSend);
+            myXmlHttpRequest.send(options.data);
         }else{
             return null;
         }
@@ -878,6 +891,38 @@ function ajax(url, options) {
     }else{
         return null;
     }
+}
+
+function ajaxPostPromise(url){
+    // 返回一个新的 Promise
+    return new Promise(function(resolve, reject) {
+        // 经典 XHR 操作
+        var req = getXmlHttpObject();
+        req.open('post', url);
+
+        req.onload = function() {
+            // 当发生 404 等状况的时候调用此函数
+            // 所以先检查状态码
+            if (req.status == 200) {
+                // 以响应文本为结果，完成此 Promise
+                resolve(req.response);
+            }
+            else {
+                // 否则就以状态码为结果否定掉此 Promise
+                // （提供一个有意义的 Error 对象）
+                reject(Error(req.statusText));
+            }
+        };
+
+        // 网络异常的处理方法
+        req.onerror = function() {
+            reject(Error("Network Error"));
+        };
+
+        // 发出请求
+        req.send(options.data);
+    });
+
 }
 
 // 使用示例：

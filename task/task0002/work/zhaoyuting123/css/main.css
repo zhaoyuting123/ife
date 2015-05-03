@@ -131,3 +131,32 @@ hr{
     transition:  5.6s  ease-in-out left;
 }
 */
+
+#searchResult {
+    border:1px solid black;
+    width: 170px;
+    height:70px;
+}
+
+#searchResult ul{
+    padding:0px;
+    margin:0px;
+}
+#searchResult ul li{
+    list-style-type:none;
+    font-size:14px;
+
+}
+#searchResult ul li:hover{
+   background-color:lightgrey;
+}
+li:focus{
+    outline:none;
+    background-color:lightgrey;
+}
+.displayNone{
+    display:none;
+}
+.backGrey{
+    background-color:lightgrey;
+}
