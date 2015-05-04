@@ -893,7 +893,7 @@ function ajax(url, options) {
     }
 }
 
-function ajaxPostPromise(url){
+function ajaxPostPromise(url,options){
     // 返回一个新的 Promise
     return new Promise(function(resolve, reject) {
         // 经典 XHR 操作

@@ -66,34 +66,33 @@
             return false;
         }
 
-
         var resultDiv = $("ul")[0];
 
         removeResult(resultDiv);
 
-        var data = ["aaaa","asdfa","asddddd","asddddd"];
+        var data=[];
 
+        var myUrl="http://127.0.0.1:121/";
+        var options ={
 
-        addToDiv(resultDiv,data);
-        addClickEvent($("li"),clickItem);
-
-
-        removeClass($("#searchResult"),"displayNone");
-
-
-
-        /*ajax(
-                'http://localhost:8080/server/ajaxtest',
-                {
                     data: {
-                        keyWords: keyWords
+                        keyWords: $("#myKey").value
                     },
-                    onsuccess: function (responseText, xhr) {
-                        console.log(responseText);
+                    onsuccess: function (responseText) {
+                       alert(responseText);
+                        data = JSON.parse(responseText).data;//将数据复制给data，用于填充下拉框
+                        addToDiv(resultDiv,data);
+                        addClickEvent($("li"),clickItem);
+                        removeClass($("#searchResult"),"displayNone");
                     }
-                }
-        );*/
+                };
 
+
+        var promise=ajaxPostPromise(myUrl,options);
+
+        promise.then(options.onsuccess,function(err){
+            alert("错误啦"+err);
+        });
     }
 
     function addToDiv(element,data){
@@ -121,12 +120,7 @@
         removeClass($(".backGrey"),"backGrey");
         $("#myKey").value = value;
         $("#myKey").focus();
-
     }
-
-   
-
-
 </script>
 </body>
 </html>
