@@ -4,8 +4,134 @@
     <meta charset="UTF-8">
     <title>task0002</title>
 </head>
+<style rel="stylesheet">
+    body{
+        margin:0 auto;
+        padding:0;
+        background-color: rgb(221,221,221);
+    }
+    div{
+        width:150px;
+        height:360px;
+        background-color:white;
+        position:absolute;
+    }
+    #left{
+        left:0px;
+    }
 
+    #right{
+       left:260px;
+    }
+    .small{
+        width:150px;
+        height:40px;
+        background-color:rgb(255,0,0);
+        font-size:12px;
+        border:1px solid black;
+        text-align:center;
+        line-height: 40px;
+        float:left;
+        position:relative;
+    }
+</style>
 <body>
-    
+<!--实现一个可拖拽交互的界面
+如示例图，左右两侧各有一个容器，里面的选项可以通过拖拽来左右移动
+被选择拖拽的容器在拖拽过程后，在原容器中消失，跟随鼠标移动
+注意拖拽释放后，要添加到准确的位置
+拖拽到什么位置认为是可以添加到新容器的规则自己定
+注意交互中良好的用户体验和使用引导-->
+
+<div id="left">
+    <div draggable="true" id="div1" class="small">左边小方块1</div>
+    <div draggable="true" id="div2" class="small">左边小方块2</div>
+    <div draggable="true" id="div3" class="small">左边小方块3</div>
+    <div draggable="true" id="div4" class="small">左边小方块4</div>
+</div>
+
+
+<div id = "right">
+    <div class="small">右边小方块1</div>
+    <div class="small">右边小方块2</div>
+    <div class="small">右边小方块3</div>
+    <div class="small">右边小方块4</div>
+</div>
+
+
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/task0002_4.js"></script>
+<script type="text/javascript">
+
+    //给每个元素添加点击事件
+    for(var i=0;i<8;i++){
+        document.addEventListener("mousemove",move);
+        $(".small")[i].addEventListener("mousedown",down);
+        $(".small")[i].addEventListener("mouseup",up);
+    }
+
+  /*  document.addEventListener("mousedown",down);
+*/
+
+    var activeNode = "";
+
+    function move(event){
+        if(isSmall){
+            //获取当前鼠标的位置
+            var x = event.clientX;
+            var y = event.clientY;
+            //判断当前节点的位置，属于左边div还是右边div
+            var activeNodeParentId  = activeNode.parentNode.id;
+
+            if(activeNodeParentId == "left"){
+                    activeNode.style.left=x+"px";
+                    activeNode.style.top=y-activeNode.offsetTop+"px";
+            }else if(activeNodeParentId == "right"){
+                activeNode.style.left=x-260+"px";
+                activeNode.style.top=y-activeNode.offsetTop+"px";
+            }
+        }
+    }
+    var isSmall = false;
+
+    //判断是否是小方块
+    function down(e){
+        console.log("按下了down");
+        console.log(e.target);
+        activeNode = e.target;
+        if(e.target.className.indexOf('small')!=-1){
+            isSmall=true;
+            document.addEventListener("mousemove",move);
+            document.addEventListener("mouseup",up);
+        }
+    }
+
+    function up(){
+        console.log("松开鸟");
+        var activeParentId = activeNode.parentNode.id;
+        var x = parseInt(activeNode.style.left.slice(0,-2));
+        var y = parseInt(activeNode.style.top.slice(0,-2));
+
+        //左边的div移动到了右方区域
+        if(activeParentId=="left"&&x<410&&x>260&&y<360){
+            $("#right").appendChild(activeNode);
+            alert("添加到了right:");
+            activeNode.style.left="0px";
+            activeNode.style.top="0px";
+        }
+
+        //右边的div移动到了左边的区域
+        else if(activeParentId=="right"&&x<150&&y<360){
+            $("#left").appendChild(activeNode);
+            alert("添加到了left");
+            activeNode.style.left="0px";
+            activeNode.style.top="0px";
+        }
+
+        isSmall = false;
+    }
+
+</script>
+
 </body>
 </html>
