@@ -9,21 +9,66 @@
             margin:0;
             padding:0;
         }
-        .test{
+        .div1{
             border:1px solid red;
             width:200px;
             height:200px;
             margin-top:-50px;
             margin-right:20px;
-            margin-bottom:-30px;
+            margin-bottom:80px;
             margin-left:40px;
             background-color:greenyellow;
+            /*float:left;*/
+        }
+        .div2{
+           /* float:left;*/
+            border:1px solid red;
+            width:200px;
+            height:200px;
+            background-color:lightpink;
+            margin-top:40px;
+        }
+        .div3{
+            border:1px solid red;
+            background-color:palegreen;
+            margin-top:20px;
+        }
+        .div3_1{
+            border:1px solid red;
+            width:200px;
+            height:200px;
+            background-color:palegoldenrod;
+            margin-top:40px;
 
         }
+        .div3_2{
+            border:1px solid red;
+            width:200px;
+            height:200px;
+            background-color:plum;
+            /*margin-top:40px;*/
+        }
+
     </style>
 </head>
 <body>
-<div class="test"></div>
+    <!--<div>
+        <h4>两个相邻元素的，div1的margin-bottom和div2的margin-top，都为正值，取最大</h4>
+    </div>
+    <hr/>
+    <div class="div1"></div>
+    <div class="div2"></div>-->
+
+    <div>
+        <h4>两个相邻元素的，div3为父元素，div3_1为子元素，父元素的margin-top和div3_1的margin-top</h4>
+    </div>
+    <hr/>
+    <div class="div3">
+        <div class="div3_1"></div>
+        <div class="div3_2">
+    </div>
+
+    </div>
 
 </body>
 </html>
