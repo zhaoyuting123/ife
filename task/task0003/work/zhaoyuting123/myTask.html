@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <title>toDoList</title>
+    <style type="text/css">
+    body{
+        padding:0;
+        margin:0;
+        height:100%;
+    }
+
+    .top{
+        margin:0 auto;
+        background-color: rgb(221,221,221);
+        width:100%;
+        height:60px;
+        line-height:60px;
+    }
+
+    #name{
+        padding-left:15px;
+    }
+
+    .container{
+        position:absolute;
+        margin:0 auto;
+        overflow:hidden;
+        width:100%;
+        background-color:rgb(242,242,242);
+    }
+
+    #left {
+        width: 230px;
+        padding:0 ;
+        font-size:16px;
+        background-color: rgb(242,242,242);
+
+    }
+
+    #center{
+        width:230px;
+    }
+
+    #right {
+        overflow:hidden;
+    }
+
+    #left >ul li,#toDoList>ul li {
+        list-style-type: none;
+    }
+
+    #taskClass>ul>li>ul>li:hover {
+        background-color: white;
+    }
+
+    #toDoList>ul>li>ul>li:hover {
+        background-color: pink;
+    }
+
+    #left>ul,#toDoList>ul{
+        padding:15px;
+    }
+
+    #progress{
+        width: 100%;
+        height:40px;
+        line-height:40px;
+        background-color: rgb(242,242,242);
+        font-size: 14px;
+        border-bottom:1px solid black;
+    }
+
+    #progress ul{
+        margin:0px;
+    }
+
+    #progress>ul li {
+        list-style-type:none;
+        display:inline;
+    }
+
+    #toDoList{
+        font-size:14px;
+    }
+
+   .toDoName{
+       width:100%;
+       height:50px;
+       font-size:18px;
+       font-weight:bold;
+       line-height:50px;
+       padding-left:20px;
+       border-bottom: 1px solid black;
+       background-color:rgb(242,242,242);
+   }
+
+    .toDoTime{
+        font-size:15px;
+        height:50px;
+        text-align:left;
+        line-height:50px;
+        padding-left:20px;
+        border-bottom:1px solid black;
+        background-color:rgb(250,250,238);
+    }
+
+    .toDoContent{
+        font-size:14px;
+        height:100%;
+        padding-left:20px;
+        margin-top:20px;
+    }
+    .selected{
+        background-color:white;
+    }
+
+    #addClassification,#addTask{
+        text-align:left;
+        font-size:14px;
+        position:absolute;
+        bottom:15px;
+
+    }
+
+    .fa-minus{
+        float:right;
+    }
+
+    #all:hover{
+        background-color:white;
+    }
+    #unFinished:hover{
+        background-color:orangered;
+    }
+    #finished:hover{
+        background-color:greenyellow;
+    }
+
+    td{
+        vertical-align:baseline;
+        background-color:rgb(242,242,242);
+        border-left:1px solid black;
+
+    }
+    table{
+        width:100%;
+        height:100%;
+    }
+   .fixWidth{
+       width:230px;
+
+   }
+
+    </style>
+</head>
+<body>
+<div class="top"> <span id="name">zhaoyuting123</span> </div>
+<div class="container">
+<table>
+    <tr>
+        <td class="fixWidth">
+            <div id="left">
+                <ul>
+                    <li><strong>所有任务</strong></li>
+                    <li id="taskClass"><strong>分类列表</strong>
+
+                    </li>
+                </ul>
+
+            <div id="addClassification"><i class="fa fa-plus"></i>新增分类</div>
+            </div>
+        </td>
+        <td class="fixWidth">
+            <div id="center">
+                <div id="progress">
+                    <ul>
+                        <li id="all"><input type="button" value="所有"></li>
+                        <li id="unFinished"><input type="button" value="未完成"></li>
+                        <li id="finished"><input type="button" value="已完成"></li>
+                    </ul>
+                </div>
+                <div id="toDoList">
+                    <ul>
+                        <li> 2015-4-12
+                            <ul>
+                                <li>to-do1</li>
+                                <li>to-do2</li>
+                                <li>to-do3</li>
+                            </ul>
+                        </li>
+                        <li> 2015-4-23
+                            <ul>
+                                <li>to-do1</li>
+                                <li>to-do2</li>
+                                <li>to-do3</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="addTask"><i class="fa fa-plus"></i>新增任务</div>
+            </div>
+        </td>
+        <td>
+            <div id="right">
+                <div class="toDoName" >to-do3</div>
+                <div class="toDoTime">任务完成日期：2014-4-30</div>
+                <div class="toDoContent">这个是内容</div>
+            </div>
+
+        </td>
+    </tr>
+</table>
+
+
+
+</div>
+<script src="js/util.js"></script>
+<script type="text/javascript">
+    var data2 = [{
+        name:"毕业设计",
+        task:["task1","task2"],
+        task1:[{"2014-4-30":
+                [
+                    {name:"todo1",completeTime:"2014-4-30",content:"todo1的内容",completeFlag:false},
+                    {name:"todo2",completeTime:"2014-4-30",content:"todo2的内容",completeFlag:false}
+                ]
+        },
+            {"2014-5-30":
+                    [
+                        {name:"todo3",completeTime:"2014-5-30",content:"todo3的内容",completeFlag:true},
+                        {name:"todo4",completeTime:"2014-5-30",content:"todo4的内容",completeFlag:true}
+                    ]
+            }
+        ],
+        task2:[
+            {"2014-4-30":
+                [
+                    {name:"todo1",completeTime:"2014-4-30",content:"todo1的内容",completeFlag:true},
+                    {name:"todo2",completeTime:"2014-4-30",content:"todo2的内容",completeFlag:true}
+                ]
+            },
+                {"2014-5-30":
+                        [
+                            {name:"todo3",completeTime:"2014-5-30",content:"todo3的内容",completeFlag:true},
+                            {name:"todo4",completeTime:"2014-5-30",content:"todo4的内容",completeFlag:true}
+                        ]
+                }
+            ]
+    },{
+        name:"baidu ife",
+        task:["task3","task4"],
+        task4:[
+            {"2014-4-30":
+                [
+                    {name:"task4todo1",completeTime:"2014-4-30",content:"todo1的内容",completeFlag:true},
+                    {name:"task4todo2",completeTime:"2014-4-30",content:"todo2的内容",completeFlag:true}
+                ]
+            },
+            {"2014-5-30":
+                    [
+                        {name:"task4todo3",completeTime:"2014-5-30",content:"todo3的内容",completeFlag:true},
+                        {name:"task4todo4",completeTime:"2014-5-30",content:"todo4的内容",completeFlag:true}
+                    ]
+            }
+        ]
+    }];
+
+
+    var selectedData = {};
+    var src = JSON.parse(localStorage.getItem("src"));
+    if(src !=undefined && src != null && src.length != 0){
+        createTask(src);
+    }else{
+        createTask(data2);
+        localStorage.setItem("src",JSON.stringify(data2));
+    }
+
+     //创建左侧的task
+    function createTask(data){
+        var str = "";
+        for(var i=0;i<data.length;i++){
+            //添加T
+            var taskStr = "";
+            if(data[i].task){
+                for(var j=0;j<data[i].task.length;j++){
+                    if(j==0&&i==0){
+                        taskStr = taskStr+"<li class='selected'>"+data[i].task[j]+"</li>";
+                    }else{
+                        taskStr = taskStr+"<li>"+data[i].task[j]+"</li>";
+                    }
+                }
+            }
+            taskStr = "<ul>"+taskStr+"</ul>";
+
+            str = str + "<li><i class='fa fa-folder-open task'></i>"+data[i].name+"<i class='fa fa-minus'></i>"+taskStr+"</li>";
+        }
+
+        str = "<strong>分类列表</strong><ul>"+str+"</ul>";
+
+        var dom = document.getElementById("taskClass");
+
+        dom.innerHTML = str;
+    }
+
+
+    //点击左侧task，更改中间的task内容
+    addClickEvent($('#taskClass ul li ul li'),showTask);
+
+    function findTaskByName(data,className){
+        //返回data中分类名称为某个特定的值的taskname的内容
+        return  data.filter(function(value){
+            return value.name == className;
+        });
+    }
+
+
+    function showTask(){
+        var target = event.target;
+        removeClass($(".selected")[0],"selected");
+        addClass(target,"selected");
+
+        var parent = target.parentNode.parentNode;
+        var className = parent.childNodes[1].data;
+        var taskName = target.innerText;
+
+        var data = findTaskByName(JSON.parse(localStorage.getItem("src")),className,taskName)[0];
+        selectedData = data;
+        var toDoNode = $("#toDoList");
+
+        //产生todo字符串
+
+        var todoStr = "";
+        var todoStrInner = "";
+        var task = data[taskName];
+
+        for(var i=0;i<task.length;i++){
+            var todoObj = task[i];
+
+            for(var day in todoObj){
+                todoStrInner="";
+                for(var todo= 0,length=todoObj[day].length;todo<length;todo++){
+                    todoStrInner = todoStrInner+"<li class='todoInnerName "+todoObj[day][todo].completeFlag+"'>"+todoObj[day][todo].name+"</li>";
+                }
+                todoStr = todoStr+"<li>"+day+"<ul>"+todoStrInner+"</ul> </li>";
+            }
+        }
+
+
+        taskStr = "<ul >"+todoStr+"</ul>";
+        toDoNode.innerHTML = taskStr;
+
+        addClickEvent($(".todoInnerName"),showDetail);
+    }
+
+
+    //点击todo显示todo的详细内容
+    function showDetail(){
+
+        //获取日期以及获取task和todo的名字，todo时间
+        var taskName = $(".selected")[0].innerText;
+        var todoName = event.target.innerText;
+        var todoTime = event.target.parentNode.parentNode.firstChild.data;
+
+        //根据task名字取出data
+        var data = selectedData[taskName];
+        var dataTime = data.filter(function(value){return value[todoTime]!=undefined})[0];
+        var obj = dataTime[todoTime].filter(function(value){
+            return value.name == todoName
+        });
+        obj = obj[0];
+
+
+        //填充名字，完成时间，任务内容到右边栏
+        $(".toDoName")[0].innerText = obj.name;
+        $(".toDoTime")[0].innerText = "任务完成日期："+obj.completeTime;
+        $(".toDoContent")[0].innerText = obj.content;
+
+    }
+
+    //添加所有，未完成，已经完成的点击事件
+    function showAll(){
+        var allTrue = $(".true");
+        for(var i=0;i<allTrue.length;i++){
+            allTrue[i].style.display = "block";
+        }
+
+        var allFalse = $(".false");
+        for( i=0;i<allFalse.length;i++){
+            allFalse[i].style.display = "block";
+        }
+    }
+
+    //显示所有已经完成的
+    function showFinished(){
+        var allTrue = $(".true");
+        for(var i=0;i<allTrue.length;i++){
+            allTrue[i].style.display = "block";
+        }
+
+        var allFalse = $(".false");
+        for( i=0;i<allFalse.length;i++){
+            allFalse[i].style.display = "none";
+        }
+    }
+
+    //显示未完成的
+    function showUnFinished(){
+        var allTrue = $(".true");
+        for(var i=0;i<allTrue.length;i++){
+            allTrue[i].style.display = "none";
+        }
+
+        var allFalse = $(".false");
+        for( i=0;i<allFalse.length;i++){
+            allFalse[i].style.display = "block";
+        }
+    }
+
+    function addClassification(){
+        var newClass = window.prompt("请输入你要添加的类别名称");
+        var newArr = [];
+        var newDataObj = {};
+
+        if(newClass){
+            newDataObj.name = newClass;
+        }
+
+        newArr.push(newDataObj);
+
+        //data2.push(newDataObj);
+        var src = JSON.parse(localStorage.getItem("src"));
+        if(src == "null"){
+            data2.push(newDataObj);
+            localStorage.setItem("src",JSON.stringify(data2));
+        }else{
+            var dataTemp = src;
+            dataTemp.push(newDataObj);
+            localStorage.setItem("src", JSON.stringify(dataTemp));
+        }
+
+
+        //createTask(data2);
+        location.reload();
+
+    }
+
+
+    addClickEvent($("#all"),showAll);
+    addClickEvent($("#finished"),showFinished);
+    addClickEvent($("#unFinished"),showUnFinished);
+    addClickEvent($("#addClassification"),addClassification);
+    addClickEvent($("#addTask"),addTask);
+
+
+    function addTask(){
+        //获取当前selectedData
+        var className = window.prompt("请输入你要添加的任务所属于的左侧分类名字:");
+        if(className){
+            var task = window.prompt("请输入你要添加任务的名字，日期，以及todo名字，todo的内容，分别用；分隔，例如：" +
+            "task112;20150101;todo1;todo的内容");
+            //添加任务
+            if(task){
+                var taskData = {};
+                var temp = {};
+                var temp2 = {};
+                var taskTemp = task.split(";");
+
+                var taskName = taskTemp[0];
+                var taskTime = taskTemp[1];
+                var taskTodoName = taskTemp[2];
+                var taskTodoContent = taskTemp[3];
+
+                taskData[taskName] = [];
+                temp[taskTime] = {};
+
+                temp2.name = taskTodoName;
+                temp2.completeTime = taskTime;
+                temp2.content = taskTodoContent;
+                temp2.completeFlag = false;
+
+                //该对象放进一个数组
+                var arr = [];
+                arr.push(temp2);
+                temp[taskTime] = arr;
+                taskData[taskName] = [];
+                taskData[taskName]=temp;
+
+                var src = JSON.parse(localStorage.getItem("src"));
+                var result = addTaskData(src,className,taskData,taskName);
+
+                localStorage.setItem("src",JSON.stringify(result));
+                location.reload();
+            }
+        }
+        //加载
+        location.reload();
+    }
+
+    function addTaskData(src,className,taskData,taskName){
+
+        var data =  findTaskByName(src,className)[0];
+        var index = -1;//存储当前task的index,如果存在同名的，则删除原来的
+        for(var i=0;i<src.length;i++){
+            if(src[i].name == className){
+                index  = i;
+            }
+        }
+
+        //添加任务的名字
+        if(data.task!=undefined&&data.task.indexOf(className)==-1){
+            //当前task存在，当前分类名不存在
+            data.task.push(taskName);
+        }else if(data.task==undefined){
+            //当前task不存在，当前分类名不存在
+            data.task = [];
+            data.task.push(taskName);
+        }
+
+        data[taskName] = [];
+
+        data[taskName].push(taskData[taskName]);
+
+        if(index!=-1){
+            src[index] = data;
+        }else{
+            src.push(data);
+        }
+        return src;
+    }
+
+    function deleteClass(){
+        var parentNode = event.target.parentNode;
+        var children = parentNode.childNodes;
+        var className = children[1].data;//获取名字
+        var data = JSON.parse(localStorage.getItem("src"));
+        var flag = 0;
+        for(var i=0;i<data.length;i++){
+            if(data[i].name == className){
+               flag = i;
+            }
+        }
+        data.splice(flag,1);
+        localStorage.setItem("src",JSON.stringify(data));
+        location.reload();
+    }
+
+
+    addClickEvent($(".fa-minus"),deleteClass);
+
+    function adjustHeight(){
+        //获取当前window的高度
+        if(window.innerHeight){
+            var height = window.innerHeight;
+        }else if(document.body.clientHeight){
+             height = document.body.clientHeight;
+        }
+
+        $(".container")[0].style.height = height-60 + "px";
+    }
+
+    adjustHeight();
+
+
+</script>
+</body>
+</html>
